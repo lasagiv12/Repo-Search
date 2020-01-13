@@ -1,0 +1,32 @@
+﻿@model IEnumerable<Matrix_Test.Models.Item>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Search Results Page - new search button and search results view -->
+
+
+<div class="container">
+    <div class="text-center">
+        <h2 style="color:white">Search Results</h2>
+        <h4 style="color: #ea4164">Total Results: @Model.Count()</h4>
+    </div>
+    <div class="p-3 text-center">
+        <button id="linker" style="color:white" class="btn bg-basic">
+            @Html.ActionLink("New Search", "Index", "Home")
+        </button>
+    </div>
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="text-center col-sm-4 p-2 ">
+                @{
+
+                    Html.RenderPartial("_itemView", item);  // Render the Repo Partial View
+                }
+            </div>
+        }
+    </div>
+</div>

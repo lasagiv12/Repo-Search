@@ -1,0 +1,52 @@
+﻿@using Matrix_Test.Models
+@model Item
+
+<!--Add function to add repo to bookmarks list-->
+<script type="text/javascript">
+    function add(obj) {
+        console.log(obj)
+        $.ajax({
+            url: '@Url.Action("saveRepoToSession")',
+            type: 'POST',
+            data: JSON.stringify(obj),
+            dataType: 'json',
+            processData: false,
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                console.warn("success");
+            },
+        })
+        alert("added to bookmarks");
+ }
+</script>
+
+
+<!--Item - Repo results from the API-->
+<div class="white-box p-3">
+    <div>
+        <h1 style="color:white">@Html.DisplayFor(modelItem => Model.name)</h1>
+        <h4 style="color: #ea4164">@Html.DisplayFor(modelItem => Model.full_name)</h4>
+    </div>
+    <div>
+        <div>
+            <img class="avatar-img" src="@Html.DisplayFor(modelItem => Model.owner.avatar_url)" />
+        </div>
+        <div>
+            @* @Html.DisplayFor(modelItem => item.description)*@
+            <h6 style="color:white;"><u></u></h6>
+            <div class="p-2">
+                <button class="btn text-white">
+                    <a href="@Html.DisplayFor(modelItem => Model.html_url)">Go to</a>
+                </button>
+
+                @{
+                    if (Request.Url.GetLeftPart(UriPartial.Path).IndexOf("SearchResults") != -1)
+                    {
+                        <button id="myLink" class="btn bg-basic" onclick="add(@Html.Raw(Json.Encode(Model)).ToString())">save</button>
+                    }
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

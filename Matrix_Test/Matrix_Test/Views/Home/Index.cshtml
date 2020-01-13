@@ -1,0 +1,72 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<style>
+    .scroll-wrapper {
+        overflow-x: scroll hidden;
+        overflow-y: hidden;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .scroll-item {
+        display: inline-block;
+    }
+</style>
+
+<!-- Home Page - search option and bookmark view list -->
+
+<div>
+    <!-- Search bar -->
+    <div class="home-page-top">
+        <div class="text-center">
+            <img src="~/Content/assets/github_logo_pink.png" width="150" />
+            <h2>Repositories Search Application</h2>
+            <h4 style="color:#ea4164">Enter technology or some text..</h4>
+        </div>
+        <div>
+            @using (Html.BeginForm("Index", "SearchResults"))
+            {
+                <div>
+                    <input style="color: black" class="search-input" type="search" name="searchValue" placeholder="Enter text here.." />
+                </div>
+                <div class="p-2">
+                    <input class="btn bg-basic" type="submit" value="Search" />
+                </div>
+            }
+        </div>
+    </div>
+
+    <hr />
+
+    <!-- Bookmark List -->
+    <div>
+
+        <div class="text-center p-3">
+            <h2 style="color:#ea4164">Bookmark Repositories List</h2>
+        </div>
+        <div class="scroll-wrapper p-3">
+            @{
+                if (Session["bookMarkList"] != null)
+                {
+                    foreach (var item in Session["bookMarkList"] as List<Matrix_Test.Models.Item>)
+                    {
+                        <div class="scroll-item w-25 text-center p-3">
+                            @{
+                                Html.RenderPartial("_itemView", item);  // Render the Repo Partial View
+                            }
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="text-center">
+                        <h3>
+                            <i class="text-light">No bookmarks yet..</i>
+                        </h3>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
